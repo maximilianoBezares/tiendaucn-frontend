@@ -12,7 +12,6 @@
     "format:check": "prettier --check .",
     "knip": "knip",
     "knip:fix": "knip --fix",
-    "prepare": "husky",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -63,7 +62,6 @@
     "eslint-plugin-next": "^0.0.0",
     "eslint-plugin-prettier": "^5.5.4",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "husky": "^9.1.7",
     "knip": "^5.70.2",
     "lint-staged": "^16.2.7",
     "postcss": "^8.5.6",
