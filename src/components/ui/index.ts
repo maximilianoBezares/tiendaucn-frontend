@@ -43,3 +43,15 @@ export {
   InputOTPSeparator,
   InputOTPSlot,
 } from "./input-otp";
+export {
+    Skeleton,
+} from "./skeleton"
+export {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "./pagination";
