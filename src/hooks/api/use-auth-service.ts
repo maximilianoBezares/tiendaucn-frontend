@@ -5,6 +5,7 @@ import { authService } from "@/services";
 import {
   LoginRequest,
   RegisterRequest,
+  VerifyEmailRequest
 } from "@/models/requests";
 import { handleApiError } from "@/lib";
 import { queryClient } from "@/providers";
@@ -67,6 +68,28 @@ export const useRegisterMutation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth"] });
+    },
+  });
+};
+
+export const useVerifyEmailMutation = () => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: async (data: VerifyEmailRequest) => {
+      await authService.verifyEmail(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth"] });
+      router.push("/auth/login");
+    },
+  });
+};
+
+export const useResendCodeMutation = () => {
+  return useMutation({
+    mutationFn: async (email: string) => {
+      await authService.resendVerificationCode(email);
     },
   });
 };

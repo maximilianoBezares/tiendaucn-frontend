@@ -1,5 +1,7 @@
 export {
     useLoginMutation,
     useLogoutMutation,
-    useRegisterMutation
+    useRegisterMutation,
+    useVerifyEmailMutation,
+    useResendCodeMutation
  } from "./use-auth-service"

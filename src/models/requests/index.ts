@@ -1,3 +1,4 @@
 export {
     type LoginRequest,
-    type RegisterRequest } from "./auth"
+    type RegisterRequest,
+    type VerifyEmailRequest } from "./auth"

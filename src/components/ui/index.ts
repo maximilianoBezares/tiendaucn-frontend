@@ -37,3 +37,9 @@ export {
   SelectTrigger,
   SelectValue,
 } from "./select";
+export {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "./input-otp";

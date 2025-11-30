@@ -15,3 +15,8 @@ export interface RegisterRequest {
   phoneNumber: string;
   gender: string;
 }
+
+export interface VerifyEmailRequest {
+  email: string;
+  verificationCode: string;
+}
