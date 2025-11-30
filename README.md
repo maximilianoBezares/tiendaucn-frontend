@@ -43,7 +43,7 @@ Para crearlo ejecute el siguiente comando:
 ```bash
 cp .env.example .env.local
 ```
-Posterior ah ello le debe de quedar algo asi el .env.local:
+Posterior a ello le debe de quedar algo asi el .env.local:
 ```bash
 NEXT_PUBLIC_API_URL=your-api-url-here
 NEXTAUTH_SECRET=your-auth-secret-here
