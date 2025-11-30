@@ -38,15 +38,24 @@ El proyecto requiere un archivo .env en la raíz para conectarse con el Backend.
 
 Crea un archivo llamado .env.local (o .env) en la raíz del proyecto.
 
-Agrega la siguiente variable apuntando a tu API (Backend):
+Para crearlo ejecute el siguiente comando:
 
 ```bash
-# URL base de la API del Backend
+cp .env.example .env.local
+```
+Posterior ah ello le debe de quedar algo asi el .env.local:
+```bash
+NEXT_PUBLIC_API_URL=your-api-url-here
+NEXTAUTH_SECRET=your-auth-secret-here
+```
+En este caso ajuste el puerto o URL según corresponda a tu backend desplegado o local
+```bash
 NEXT_PUBLIC_API_URL=http://localhost:5147
-
-# Ajusta el puerto o URL según corresponda a tu backend desplegado o local
-Nota: Asegúrate de que tu backend esté corriendo y sea accesible desde esta URL.
-
+```
+Y ingrese el siguiente comando y automaticamente se le creara su auth secret:
+En este caso ajuste el puerto o URL según corresponda a tu backend desplegado o local
+```bash
+npx auth secret
 ```
 
 ### 5. Ejecutar el proyecto
