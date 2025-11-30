@@ -3,3 +3,15 @@ export interface LoginRequest {
   password: string;
   rememberMe: boolean;
 }
+
+export interface RegisterRequest {
+  email: string;
+  password: string;
+  confirmPassword: string;
+  rut: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  phoneNumber: string;
+  gender: string;
+}

@@ -1,2 +1,3 @@
 export {
-    type LoginRequest } from "./auth"
+    type LoginRequest,
+    type RegisterRequest } from "./auth"

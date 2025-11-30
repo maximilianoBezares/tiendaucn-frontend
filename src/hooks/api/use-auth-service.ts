@@ -4,6 +4,7 @@ import { signIn, signOut } from "next-auth/react";
 import { authService } from "@/services";
 import {
   LoginRequest,
+  RegisterRequest,
 } from "@/models/requests";
 import { handleApiError } from "@/lib";
 import { queryClient } from "@/providers";
@@ -55,6 +56,17 @@ export const useLogoutMutation = () => {
     onSuccess: () => {
       toast.success("Sesión cerrada correctamente");
       router.refresh();
+    },
+  });
+};
+
+export const useRegisterMutation = () => {
+  return useMutation({
+    mutationFn: async (data: RegisterRequest) => {
+      await authService.register(data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["auth"] });
     },
   });
 };

@@ -30,3 +30,10 @@ export {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 export { Toaster } from "./sooner"
+export {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./select";
