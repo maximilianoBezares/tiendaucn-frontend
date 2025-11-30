@@ -1,21 +1,32 @@
+import { ApiResponse } from "@/models/generics";
+import { CartItemRequest } from "@/models/requests";
 import { GetCartResponse } from "@/models/responses";
 import { BaseApiService } from "./base-api-service";
-import { ApiResponse } from "@/models/generics";
-import { CartRequest } from "@/models/requests";
 
-export class CartService extends BaseApiService { 
+export class CartService extends BaseApiService {
+  constructor() {
+    super("/cart");
+  }
 
-    constructor() {
-        super('/cart');
-    }
+  addItemToCart(item: CartItemRequest) {
+    return this.httpClient.post<ApiResponse<GetCartResponse>>(
+      `${this.baseURL}/items`,
+      item,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+  }
 
-    getCart() {
-        return this.httpClient.get<ApiResponse<GetCartResponse>>(`${this.baseURL}`);
-    }
-
-    addItemToCart(cartData: CartRequest){
-        return this.httpClient.post<ApiResponse<GetCartResponse>>(`${this.baseURL}/items`, cartData);
-    }
-
-
+  updateItemQuantity(item: CartItemRequest) {
+    return this.httpClient.patch<ApiResponse<GetCartResponse>>(
+      `${this.baseURL}/items`,
+      item,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      }
+    );
+  }
 }
+
+export const cartService = new CartService();
