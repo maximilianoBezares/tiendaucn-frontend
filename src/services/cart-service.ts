@@ -8,6 +8,11 @@ export class CartService extends BaseApiService {
     super("/cart");
   }
 
+  getCart(){
+    return this.httpClient.get<ApiResponse<GetCartResponse>>(
+    `${this.baseURL}`
+    );
+    }
   addItemToCart(item: CartItemRequest) {
     return this.httpClient.post<ApiResponse<GetCartResponse>>(
       `${this.baseURL}/items`,
@@ -25,6 +30,24 @@ export class CartService extends BaseApiService {
       {
         headers: { "Content-Type": "multipart/form-data" },
       }
+    );
+  }
+
+  removeItemFromCart(itemId: string) {
+    return this.httpClient.delete<ApiResponse<GetCartResponse>>(
+      `${this.baseURL}/items/${itemId}`
+    );
+  }
+
+  clearCart(){
+    return this.httpClient.delete<ApiResponse<GetCartResponse>>(
+      `${this.baseURL}/clear`
+    );
+  }
+
+  checkout(){
+    return this.httpClient.post<ApiResponse<GetCartResponse>>(
+      `${this.baseURL}/checkout`
     );
   }
 }

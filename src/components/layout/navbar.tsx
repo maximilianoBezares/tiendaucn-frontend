@@ -26,6 +26,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui";
 import { useLogoutMutation } from "@/hooks/api";
+import { CartDropdown } from "./cart-dropdown";
 
 export const Navbar = () => {
   // Hooks
@@ -108,7 +109,9 @@ export const Navbar = () => {
           </ul>
 
           <ul className="flex space-x-4 font-medium items-center">
-
+            <li>
+              <CartDropdown />
+            </li>
             {isLoading ? (
               <></>
             ) : isAuthenticated ? (
