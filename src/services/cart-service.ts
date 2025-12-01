@@ -40,7 +40,7 @@ export class CartService extends BaseApiService {
   }
 
   clearCart(){
-    return this.httpClient.delete<ApiResponse<GetCartResponse>>(
+    return this.httpClient.post<ApiResponse<GetCartResponse>>(
       `${this.baseURL}/clear`
     );
   }

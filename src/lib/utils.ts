@@ -39,3 +39,7 @@ export function thousandSeparatorPipe(num: number): string {
     .toString()
     .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }
+
+export const isValidId = (id: string): boolean => {
+  return /^[1-9]\d*$/.test(id);
+};

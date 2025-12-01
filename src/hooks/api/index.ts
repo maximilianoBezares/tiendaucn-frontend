@@ -7,6 +7,7 @@ export {
  } from "./use-auth-service"
 export {
     useGetProductsForCustomer,
+    useGetProductDetail,
 } from "./use-product-service"
 export {
     useAddItemToCartMutation,
