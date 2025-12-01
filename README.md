@@ -50,7 +50,7 @@ NEXTAUTH_SECRET=your-auth-secret-here
 ```
 En este caso ajuste el puerto o URL según corresponda a tu backend desplegado o local
 ```bash
-NEXT_PUBLIC_API_URL=http://localhost:5147
+NEXT_PUBLIC_API_URL=http://localhost:5147/api
 ```
 Y ingrese el siguiente comando y automaticamente se le creara su auth secret:
 En este caso ajuste el puerto o URL según corresponda a tu backend desplegado o local
