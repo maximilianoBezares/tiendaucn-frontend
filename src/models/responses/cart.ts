@@ -1,7 +1,7 @@
 export interface GetCartResponse {
     buyerId:string;
     userId:Number | null;
-    items: string[];
+    items: CartItem[];
     subTotalPrice: string;
     savings: string;
     totalPrice: string;

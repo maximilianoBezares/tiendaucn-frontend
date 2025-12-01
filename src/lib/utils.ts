@@ -32,3 +32,10 @@ export const hasLegalAge = (birthDate: Date): boolean => {
 
   return age >= 18;
 };
+
+export function thousandSeparatorPipe(num: number): string {
+  return num
+    .toFixed(0)
+    .toString()
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}

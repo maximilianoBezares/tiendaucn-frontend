@@ -29,7 +29,7 @@ export {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-export { Toaster } from "./sooner"
+export { Toaster } from "./sooner";
 export {
   Select,
   SelectContent,
@@ -43,9 +43,7 @@ export {
   InputOTPSeparator,
   InputOTPSlot,
 } from "./input-otp";
-export {
-    Skeleton,
-} from "./skeleton"
+export { Skeleton } from "./skeleton";
 export {
   Pagination,
   PaginationContent,
@@ -55,3 +53,14 @@ export {
   PaginationNext,
   PaginationPrevious,
 } from "./pagination";
+
+export {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
