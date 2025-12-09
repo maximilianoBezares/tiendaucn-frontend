@@ -5,3 +5,4 @@ export { default as VerifyEmailView } from "./app/auth/verify-email";
 export { default as ProductsView } from "./app/products";
 export { default as ProductDetailView} from "./app/products/[id]";
 export { default as OrdersView } from "./app/orders"
+export { default as OrderDetailView } from "./app/orders/order/[code]"
