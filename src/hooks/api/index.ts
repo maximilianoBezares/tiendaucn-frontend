@@ -15,6 +15,7 @@ export {
     useRemoveItemFromCartMutation,
     useClearCartMutation,
     useGetCart,
+    useCheckoutMutation
 } from "./use-cart-service"
 export {
   useCreateOrderMutation,
