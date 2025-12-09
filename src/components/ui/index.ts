@@ -64,7 +64,6 @@ export {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
 export {
   Carousel,
   CarouselContent,
@@ -72,3 +71,11 @@ export {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
+export {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./table";
