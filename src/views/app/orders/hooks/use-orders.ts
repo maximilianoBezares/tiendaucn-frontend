@@ -1,5 +1,5 @@
-import { useRouter } from "next/navigation";
-import { MouseEvent, useState } from "react";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { MouseEvent } from "react";
 import { toast } from "sonner";
 
 import { useGetOrdersList } from "@/hooks/api";
@@ -8,15 +8,17 @@ import { handleApiError } from "@/lib";
 import { PaginationQueryParams } from "@/models/requests";
 
 export const useOrders = () => {
-  // State
-  const [filters, setFilters] = useState<PaginationQueryParams>({
-    pageNumber: 1,
-    pageSize: 10,
-    searchTerm: "",
-  });
-
-  // Router
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const pageNumber = Number(searchParams.get("pageNumber")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 10;
+  const searchTerm = searchParams.get("searchTerm") || "";
+  const filters: PaginationQueryParams = {
+    pageNumber,
+    pageSize,
+    searchTerm,
+  };
 
   // PDF Generator
   const { generateOrderPDF } = useOrderPDF();
@@ -25,7 +27,7 @@ export const useOrders = () => {
   const {
     data: queryData,
     isLoading,
-    error,
+    error: apiError,
     refetch,
   } = useGetOrdersList(filters);
 
@@ -34,62 +36,77 @@ export const useOrders = () => {
   const orders = ordersData?.orders ?? [];
   const totalPages = ordersData?.totalPages ?? 0;
   const totalCount = ordersData?.totalCount ?? 0;
-  const currentPage = ordersData?.currentPage ?? 1;
-  const hasOrders = orders.length > 0;
+  const currentPage = ordersData?.currentPage ?? pageNumber;
 
-  // Helpers
+  // Manejo de Error para "Empty State"
+  const obtainErrorDetails = () => {
+    if (!apiError) return null;
+    const handledError = handleApiError(apiError);
+
+    // Ocultar error si es solo que no hay resultados
+    if (
+      handledError.details?.includes("No se encontraron coincidencias") ||
+      handledError.message === "Producto no encontrado" ||
+      handledError.message?.includes("Argumento fuera de rango") ||
+      handledError.message?.includes("out of the range")
+    ) {
+      return null;
+    }
+    return handledError;
+  };
+
+  const currentError = obtainErrorDetails();
+
+  // Helpers de Paginación
   const generatePageNumbers = () => {
     const pages = [];
-
     if (totalPages <= 5) {
-      for (let i = 1; i <= totalPages; i++) {
-        pages.push(i);
-      }
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
     } else {
       pages.push(1);
-
       if (currentPage <= 3) {
         pages.push(2, 3, "...", totalPages);
       } else if (currentPage >= totalPages - 2) {
         pages.push("...", totalPages - 2, totalPages - 1, totalPages);
       } else {
-        pages.push(
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages
-        );
+        pages.push("...", currentPage - 1, currentPage, currentPage + 1, "...", totalPages);
       }
     }
-
     return pages;
   };
 
   const pageNumbers = totalPages > 1 ? generatePageNumbers() : [];
 
-  const obtainErrorDetails = () => {
-    if (!error) return null;
+  const updateUrlParams = (updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString());
 
-    return handleApiError(error);
-  };
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === "") {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
 
-  // Actions
-  const handleUpdateFilters = (newFilters: Partial<PaginationQueryParams>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleGoToPage = (page: number) => {
-    handleUpdateFilters({ pageNumber: page });
+    updateUrlParams({ pageNumber: page.toString() });
   };
 
-  const handleSearch = (searchTerm: string) => {
-    handleUpdateFilters({ searchTerm, pageNumber: 1 });
+  const handleSearch = (term: string) => {
+    updateUrlParams({
+      searchTerm: term,
+      pageNumber: "1", 
+    });
   };
 
-  const handleChangePageSize = (pageSize: number) => {
-    handleUpdateFilters({ pageSize, pageNumber: 1 });
+  const handleChangePageSize = (size: number) => {
+    updateUrlParams({
+      pageSize: size.toString(),
+      pageNumber: "1",
+    });
   };
 
   const handleViewOrderDetail = (orderId: string) => {
@@ -106,32 +123,21 @@ export const useOrders = () => {
       await generateOrderPDF(order);
     } catch (error) {
       const errorMessage = (error as Error).message;
-      toast.error(
-        errorMessage
-          ? `Error al descargar el PDF: ${errorMessage}`
-          : "Error al descargar el PDF"
-      );
+      toast.error(errorMessage || "Error al descargar el PDF");
     }
   };
 
   const handlePreviousPage = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (currentPage > 1) {
-      handleGoToPage(currentPage - 1);
-    }
+    if (currentPage > 1) handleGoToPage(currentPage - 1);
   };
 
   const handleNextPage = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (currentPage < totalPages) {
-      handleGoToPage(currentPage + 1);
-    }
+    if (currentPage < totalPages) handleGoToPage(currentPage + 1);
   };
 
-  const handlePageClick = (
-    e: MouseEvent<HTMLAnchorElement>,
-    pageNum: number
-  ) => {
+  const handlePageClick = (e: MouseEvent<HTMLAnchorElement>, pageNum: number) => {
     e.preventDefault();
     handleGoToPage(pageNum);
   };
@@ -141,9 +147,9 @@ export const useOrders = () => {
   };
 
   return {
-    // Order data
+    // Data
     orders,
-    hasOrders,
+    hasOrders: currentError ? false : orders.length > 0,
     pagination: {
       totalPages,
       totalCount,
@@ -151,11 +157,11 @@ export const useOrders = () => {
       pageNumbers,
     },
 
-    // Loading and error states
+    // Status
     isLoading,
-    error: obtainErrorDetails(),
+    error: currentError,
 
-    // Filter state
+    // Filters
     filters,
 
     // Actions

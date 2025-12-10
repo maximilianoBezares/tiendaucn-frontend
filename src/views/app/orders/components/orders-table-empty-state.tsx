@@ -34,7 +34,7 @@ export const OrdersTableEmptyState = () => {
                     No se encontraron órdenes
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Intenta ajustar los filtros de búsqueda
+                    Aún no has realizado compras o tu búsqueda no arrojó resultados
                   </p>
                 </div>
               </div>
