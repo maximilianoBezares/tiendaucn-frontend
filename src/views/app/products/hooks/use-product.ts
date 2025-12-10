@@ -1,18 +1,21 @@
-import { useRouter } from "next/navigation";
-import { MouseEvent, useState } from "react";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { MouseEvent } from "react";
 
 import { useGetProductsForCustomer } from "@/hooks/api";
 import { PaginationQueryParams } from "@/models/requests";
 
 export const useProducts = () => {
-  // State
-  const [filters, setFilters] = useState<PaginationQueryParams>({
-    pageNumber: 1,
-    pageSize: 10,
-    searchTerm: "",
-  });
-
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const pageNumber = Number(searchParams.get("pageNumber")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 10;
+  const searchTerm = searchParams.get("searchTerm") || "";
+  const filters: PaginationQueryParams = {
+    pageNumber,
+    pageSize,
+    searchTerm,
+  };
 
   // API calls
   const {
@@ -61,20 +64,34 @@ export const useProducts = () => {
   const pageNumbers = totalPages > 1 ? generatePageNumbers() : [];
 
   // Actions
-  const handleUpdateFilters = (newFilters: Partial<PaginationQueryParams>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
+    const createQueryString = (name: string, value: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name, value);
+    return params.toString();
   };
 
   const handleGoToPage = (page: number) => {
-    handleUpdateFilters({ pageNumber: page });
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("pageNumber", page.toString());
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
-  const handleSearch = (searchTerm: string) => {
-    handleUpdateFilters({ searchTerm, pageNumber: 1 });
+  const handleSearch = (term: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (term) {
+      params.set("searchTerm", term);
+    } else {
+      params.delete("searchTerm");
+    }
+    params.set("pageNumber", "1");
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
-  const handleChangePageSize = (pageSize: number) => {
-    handleUpdateFilters({ pageSize, pageNumber: 1 });
+  const handleChangePageSize = (size: number) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("pageSize", size.toString());
+    params.set("pageNumber", "1");
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleRedirectToProductDetail = (productId: number) => {

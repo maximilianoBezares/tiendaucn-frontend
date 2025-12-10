@@ -26,8 +26,11 @@ export const useProductDetail = (id: string) => {
     refetch();
   };
 
-  const handleCalculateDiscountedPrice = (price: string, discount: number) => {
-    return (parseFloat(price) * (1 - discount)).toFixed(2);
+const handleCalculateDiscountedPrice = (price: string, discount: number) => {
+    const cleanPrice = price.replace(/[^0-9]/g, ""); 
+    const numericPrice = parseFloat(cleanPrice);
+    const finalPrice = numericPrice * (1 - discount);
+    return finalPrice.toLocaleString("es-CL", { style: "currency", currency: "CLP" });
   };
 
   return {

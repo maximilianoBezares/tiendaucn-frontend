@@ -48,3 +48,12 @@ export const useClearCartMutation = () => {
     },
   });
 };
+
+export const useCheckoutMutation = () => {
+  return useMutation({
+    mutationFn: async () => {
+      const response = await cartService.checkout();
+      return response.data;
+    },
+  });
+};
