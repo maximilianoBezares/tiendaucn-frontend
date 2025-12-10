@@ -1,11 +1,5 @@
 "use client";
 
-/** Parte que quite de la parte del carrito, pon lo que falta abajo de: <ul className="flex space-x-4 font-medium items-center">
-            <li>
-              <CartDropdown />
-            </li>
- */
-
 import {
   ChevronDownIcon,
   EditIcon,
@@ -138,7 +132,7 @@ export const Navbar = () => {
                     )}
                     <DropdownMenuItem asChild>
                       <Link
-                        href="#"
+                        href="/user"
                         className="flex items-center cursor-pointer"
                       >
                         <EditIcon className="h-4 w-4 mr-2" />

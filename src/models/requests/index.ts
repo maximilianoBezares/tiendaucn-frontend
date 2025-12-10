@@ -9,3 +9,8 @@ export {
 export {
     type CartItemRequest
 } from "./cart"
+export {
+    type UpdateProfileRequest,
+    type UpdateUserEmailRequest,
+    type ChangePasswordRequest
+} from "./user"

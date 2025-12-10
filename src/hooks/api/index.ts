@@ -22,3 +22,9 @@ export {
   useGetOrderDetail,
   useGetOrdersList,
 } from "./use-order-service";
+export {
+    useGetUserProfile,
+    useUpdateProfileMutation,
+    useUpdateEmailMutation,
+    useChangePasswordMutation
+} from "./use-user-service"

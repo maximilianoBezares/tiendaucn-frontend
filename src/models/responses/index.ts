@@ -7,8 +7,10 @@ export {
     type CartItem,
     type GetCartResponse
 } from "./cart"
-
 export {
   type Order,
   type GetOrdersResponse
 } from "./order";
+export {
+    type UserProfileResponse
+} from "./user"
