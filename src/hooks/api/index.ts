@@ -8,6 +8,9 @@ export {
 export {
     useGetProductsForCustomer,
     useGetProductDetail,
+    useCreateProductMutation,
+    useGetProductsForAdmin,
+    useToggleProductAvailabilityMutation
 } from "./use-product-service"
 export {
     useAddItemToCartMutation,
@@ -15,7 +18,7 @@ export {
     useRemoveItemFromCartMutation,
     useClearCartMutation,
     useGetCart,
-    useCheckoutMutation
+    useCheckoutMutation,
 } from "./use-cart-service"
 export {
   useCreateOrderMutation,

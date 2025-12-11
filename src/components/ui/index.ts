@@ -1,3 +1,5 @@
+import { Dialog } from "@radix-ui/react-dialog";
+
 export { Button } from "./button";
 export { Checkbox } from "./checkbox";
 export {
@@ -79,3 +81,25 @@ export {
   TableHeader,
   TableRow,
 } from "./table";
+
+export { Textarea } from "./textarea";
+
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
+
+export { Badge } from "./badge";
+
+export { Switch } from "./switch";
+
+export { Separator } from "./separator";
+
+
+
