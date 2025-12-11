@@ -32,6 +32,7 @@ export function useCheckoutView() {
   const [isInitializing, setIsInitializing] = useState(true);
   const hasInitialized = useRef(false);
 
+  // const isMountedRef = useRef(true);
   // Router
   const router = useRouter();
 

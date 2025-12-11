@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 import { getPublicRouteFromAdmin, isTokenExpired } from "@/lib";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
 
   const token = await getToken({
