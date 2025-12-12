@@ -67,6 +67,12 @@ const formSchema = z.object({
         ),
       { error: "Solo se admiten imágenes JPG, JPEG, PNG y WEBP" }
     ),
+    discount: z.coerce
+      .number()
+      .int({ error: "El descuento debe ser un número entero" }) // <--- NUEVA VALIDACIÓN: Debe ser entero
+      .min(0, { error: "El descuento no puede ser menor a 0" })
+      .max(100, { error: "El descuento no puede ser mayor a 100" }) // <--- MODIFICADO: Máximo 100
+      .default(0),
 });
 
 export function NewProductForm() {
@@ -86,6 +92,7 @@ export function NewProductForm() {
       categoryName: "",
       brandName: "",
       images: [] as File[],
+      discount: 0,
     },
     mode: "onTouched",
   });
@@ -218,6 +225,33 @@ export function NewProductForm() {
                 </FormItem>
               )}
             />
+
+
+            <FormField
+              control={form.control}
+              name="discount"
+              render={({ field }) => {
+                const { value, ...rest } = field;
+                return (
+                  <FormItem>
+                    <FormLabel>Descuento (%)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        placeholder="0" 
+                        min={0}
+                        max={100} 
+                        value={value as number}
+                        {...rest}
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+
 
             <FormField
               control={form.control}

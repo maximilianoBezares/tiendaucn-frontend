@@ -25,6 +25,7 @@ export const useNewProduct = () => {
       productFormData.append("status", productData.status);
       productFormData.append("categoryName", productData.categoryName);
       productFormData.append("brandName", productData.brandName);
+      productFormData.append("discount", productData.discount.toString());
 
       productData.images.forEach(image => {
         productFormData.append("images", image);

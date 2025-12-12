@@ -8,3 +8,4 @@ export { default as ProductDetailView} from "./app/products/[id]";
 export { default as OrdersView } from "./app/orders"
 export { default as OrderDetailView } from "./app/orders/order/[code]"
 export { default as CheckoutView } from "./app/checkout"
+export { default as NewProductView } from "./app/admin/new-product"

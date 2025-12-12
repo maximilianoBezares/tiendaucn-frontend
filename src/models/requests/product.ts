@@ -13,4 +13,5 @@ export interface CreateProductRequest {
   categoryName: string;
   brandName: string;
   images: File[];
+  discount : number;
 }
