@@ -98,7 +98,15 @@ Para verificar el funcionamiento de la pagina, puedes probar las siguientes ruta
    - Restricción de Admin: Intentar comprar como Admin (debe estar bloqueado).
    - Finalización: Completar la compra como usuario Cliente (vacía el carrito y crea la orden).
 
-5. Autenticación (/auth/login y /auth/register)
+5. Historial de Pedidos (/orders)
+   Ruta: http://localhost:3000/orders
+   Qué probar:
+   - Listado paginado de órdenes del usuario.
+   - Búsqueda por código.
+   - Acceso al detalle de una orden.
+   - Descarga de comprobante PDF.
+
+6. Autenticación (/auth/login y /auth/register)
    - Login: http://localhost:3000/auth/login
      Nota: Prueba las validaciones del formulario (campos vacíos, email inválido).
    - Registro: http://localhost:3000/auth/register
