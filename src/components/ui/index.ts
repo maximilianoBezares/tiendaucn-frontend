@@ -1,3 +1,5 @@
+import { Dialog } from "@radix-ui/react-dialog";
+
 export { Button } from "./button";
 export { Checkbox } from "./checkbox";
 export {
@@ -64,7 +66,6 @@ export {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-
 export {
   Carousel,
   CarouselContent,
@@ -72,3 +73,33 @@ export {
   CarouselNext,
   CarouselPrevious,
 } from "./carousel";
+export {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./table";
+
+export { Textarea } from "./textarea";
+
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "./dialog";
+
+export { Badge } from "./badge";
+
+export { Switch } from "./switch";
+
+export { Separator } from "./separator";
+
+
+

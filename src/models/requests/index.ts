@@ -4,7 +4,8 @@ export {
     type VerifyEmailRequest }
 from "./auth"
 export {
-    type PaginationQueryParams
+    type PaginationQueryParams,
+    type CreateProductRequest,
 } from "./product";
 export {
     type CartItemRequest
