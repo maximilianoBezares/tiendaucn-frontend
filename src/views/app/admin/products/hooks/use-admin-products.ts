@@ -1,3 +1,4 @@
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { MouseEvent, useState } from "react";
 import { toast } from "sonner";
 
@@ -9,13 +10,23 @@ import { handleApiError } from "@/lib";
 import { PaginationQueryParams } from "@/models/requests";
 
 export const useAdminProducts = () => {
-  // State
-  const [filters, setFilters] = useState<PaginationQueryParams>({
-    pageNumber: 1,
-    pageSize: 10,
-    searchTerm: "",
-  });
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
+  // Obtener valores iniciales de la URL
+  const pageNumber = Number(searchParams.get("pageNumber")) || 1;
+  const pageSize = Number(searchParams.get("pageSize")) || 10;
+  const searchTerm = searchParams.get("searchTerm") || "";
+
+  // Construir objeto de filtros basado en URL
+  const filters: PaginationQueryParams = {
+    pageNumber,
+    pageSize,
+    searchTerm,
+  };
+
+  // State local solo para UI (loading de toggle)
   const [toggledProductId, setToggledProductId] = useState<string | null>(null);
 
   // API calls
@@ -34,7 +45,7 @@ export const useAdminProducts = () => {
   const products = productsData?.products ?? [];
   const totalPages = productsData?.totalPages ?? 0;
   const totalCount = productsData?.totalCount ?? 0;
-  const currentPage = productsData?.currentPage ?? 1;
+  const currentPage = productsData?.currentPage ?? pageNumber;
 
   // Helpers
   const generatePageNumbers = () => {
@@ -68,21 +79,37 @@ export const useAdminProducts = () => {
 
   const pageNumbers = totalPages > 1 ? generatePageNumbers() : [];
 
-  // Actions
-  const handleUpdateFilters = (newFilters: Partial<PaginationQueryParams>) => {
-    setFilters(prev => ({ ...prev, ...newFilters }));
+  // Actions - Actualización de URL
+  const updateUrlParams = (updates: Record<string, string | null>) => {
+    const params = new URLSearchParams(searchParams.toString());
+
+    Object.entries(updates).forEach(([key, value]) => {
+      if (value === null || value === "") {
+        params.delete(key);
+      } else {
+        params.set(key, value);
+      }
+    });
+
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   const handleGoToPage = (page: number) => {
-    handleUpdateFilters({ pageNumber: page });
+    updateUrlParams({ pageNumber: page.toString() });
   };
 
-  const handleSearch = (searchTerm: string) => {
-    handleUpdateFilters({ searchTerm, pageNumber: 1 });
+  const handleSearch = (term: string) => {
+    updateUrlParams({
+      searchTerm: term,
+      pageNumber: "1",
+    });
   };
 
-  const handleChangePageSize = (pageSize: number) => {
-    handleUpdateFilters({ pageSize, pageNumber: 1 });
+  const handleChangePageSize = (size: number) => {
+    updateUrlParams({
+      pageSize: size.toString(),
+      pageNumber: "1",
+    });
   };
 
   const handleToggleProductAvailability = async (productId: string) => {
