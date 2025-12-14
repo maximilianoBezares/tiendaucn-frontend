@@ -23,7 +23,7 @@ Sigue estos pasos para levantar el proyecto en tu entorno local.
 ### 2. Clonar el repositorio
 
 ```bash
-git clone [URL_DEL_REPOSITORIO]
+git clone https://github.com/maximilianoBezares/tiendaucn-frontend.git
 ```
 
 ### 3. Instalar dependencias
