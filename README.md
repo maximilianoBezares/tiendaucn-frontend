@@ -69,40 +69,61 @@ npm run dev
 
 ## Guía de Pruebas (Flujos Principales)
 
-Para verificar el funcionamiento del avance, puedes probar las siguientes rutas y funcionalidades:
+Para verificar el funcionamiento de la pagina, puedes probar las siguientes rutas y funcionalidades:
 
 1. Catálogo Público (/products)
    Ruta: http://localhost:3000/products
-
-Qué probar:
-
-- Visualización del listado de productos obtenidos desde la API.
-- Uso de la barra de búsqueda y filtros.
-- Funcionamiento de la paginación.
-- Visualización de estados de carga (Skeletons) y manejo de errores.
+   Qué probar:
+   - Visualización del listado de productos obtenidos desde la API.
+   - Uso de la barra de búsqueda y filtros.
+   - Funcionamiento de la paginación.
+   - Visualización de estados de carga (Skeletons) y manejo de errores.
 
 2. Detalle de Producto (/products/[id])
    Acción: Haz clic en cualquier tarjeta de producto desde el catálogo.
    Qué probar:
-
-- Carga de información detallada (precio, stock, descripción).
-- Botón de "Agregar al carrito" (funcional con validación de stock).
+   - Carga de información detallada (precio, stock, descripción).
+   - Botón de "Agregar al carrito" (funcional con validación de stock).
 
 3. Carrito de Compras (/cart)
    Ruta: http://localhost:3000/cart
+   Qué probar:
+   - Persistencia de productos (usa Zustand): recarga la página y los productos deben seguir ahí.
+   - Modificar cantidades y eliminar ítems.
 
-Qué probar:
+4. Proceso de Pago (Checkout)
+   Acción: Desde el carrito, intentar finalizar la compra.
+   Qué probar:
+   - Validación de Sesión: Intentar comprar sin login (debe pedir autenticación).
+   - Restricción de Admin: Intentar comprar como Admin (debe estar bloqueado).
+   - Finalización: Completar la compra como usuario Cliente (vacía el carrito y crea la orden).
 
-- Persistencia de productos (usa Zustand): recarga la página y los productos deben seguir ahí.
-- Modificar cantidades y eliminar ítems.
+5. Autenticación (/auth/login y /auth/register)
+   - Login: http://localhost:3000/auth/login
+     Nota: Prueba las validaciones del formulario (campos vacíos, email inválido).
+   - Registro: http://localhost:3000/auth/register
+     Nota: Verifica las validaciones de RUT, contraseña segura y fecha de nacimiento.
 
-4. Autenticación (/auth/login y /auth/register)
+### Panel de Administración (/admin)
+**Credenciales de prueba:**
+- Email: admin@ucn.cl
+- Pass: Hola1234!
+**Qué probar:**
+1. Ingresar a /admin/products.
+2. Crear un nuevo producto subiendo una imagen (verificar preview).
+3. Editar el stock de un producto existente.
 
-- Login: http://localhost:3000/auth/login
-  Nota: Prueba las validaciones del formulario (campos vacíos, email inválido).
+### Flujo de Verificación (Email)
+Al registrarse, el sistema envía un código OTP.
+- **Modo de prueba:** El código se puede visualizar en la consola del Backend.
+- Probar ingresar un código erróneo para ver la validación y luego el correcto.
 
-- Registro: http://localhost:3000/auth/register
-  Nota: Verifica las validaciones de RUT, contraseña segura y fecha de nacimiento.
+### Enfoque de Rendimiento
+Se aplicaron las siguientes estrategias de optimización:
+- **Imágenes:** Uso de `next/image` para conversión automática a WebP y lazy loading.
+- **Estado:** Uso de Zustand para evitar "prop drilling" y re-renderizados innecesarios en el carrito.
+- **Datos:** Implementación de TanStack Query con `staleTime` para caché de productos.
+- **UX:** Implementación de Debounce en la barra de búsqueda para minimizar peticiones al servidor.
 
 ## Stack Tecnológico
 
@@ -124,3 +145,13 @@ Qué probar:
 - src/services: Capa de servicios para peticiones HTTP.
 - src/stores: Estado global de la aplicación (Carrito).
 - src/views: Componentes específicos de cada vista/página.
+
+## Rama de Entrega
+La versión final evaluable del frontend se encuentra en la rama **main** (la unica disponible).
+
+## Backend
+
+Este frontend requiere que el servidor backend esté en ejecución.
+Repositorio del Backend: https://github.com/maximilianoBezares/TiendaUCN.git
+
+**Nota:** Asegúrate de que la API esté corriendo en el puerto configurado en tu `.env` (por defecto `http://localhost:5147/api`) antes de iniciar el frontend.
